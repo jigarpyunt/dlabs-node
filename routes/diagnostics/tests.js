@@ -7,12 +7,26 @@ const mongoose =  require('mongoose');
 // Getting Test Model
 const { Test }  =  require('../../models/diagnostics/tests');
 
-router.get('/', async function( request, response ) {
-    let tests = await Test.find().sort({ name : 1});
-    response.status(200).send(tests);
+router.get('/:id?', async function ( request, response )  {
+   
+    if( request.query.id ) {
+
+        let testId = request.query.id;
+        let test  = await Test.findById({ _id : testId });  
+    
+        if( ! test ) {
+            return response.status(404).send('Resource not found');
+        }
+        return response.status(200).send(test);
+
+    } else {
+        let tests = await Test.find().sort({ name : 1});
+        response.status(200).send(tests);
+        return response.status(200).send(tests);
+    }    
 });
 
-router.post('/', async function( request , response ) {
+router.post('/', async function ( request , response ) {
     let { error } = validateRequest(request.body);
     if( error ) {
         return response.status(400).send( error.details[0].message )
@@ -21,6 +35,15 @@ router.post('/', async function( request , response ) {
     const newTest = new Test( request.body );
     const res = await newTest.save();
     response.status(200).send(res);
+}); 
+
+router.delete('/:id?', async function( request, response ) {
+    let testId =  request.query.id;
+    let test = await Test.findByIdAndDelete(testId);
+    if( !test) {
+        return response.status(404).send('The Resource with this ID not found');
+    }
+    return response.status(200).send(test);
 }); 
 
 

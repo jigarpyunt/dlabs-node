@@ -9,6 +9,8 @@ const tests = require('./routes/diagnostics/tests');
 
 // Middleware plugins
 app.use(express.json());
+app.use(express.urlencoded({ extended : true }));
+
 
 // Using Routes
 app.use('/api/diagnostics/tests' , tests);
