@@ -16,7 +16,7 @@ const testSchema = mongoose.Schema({
     description: String
 });
 
-const Test = mongoose.model('test', testSchema);
+const Test = mongoose.model('Test', testSchema);
 
 module.exports.testSchema = testSchema;
 module.exports.Test =  Test;

@@ -5,8 +5,6 @@ const app = express();
 const { ConnectToMongoDb } = require('./db/connectivity');
 ConnectToMongoDb();
 
-const tests = require('./routes/diagnostics/tests');
-const profiles = require('./routes/diagnostics/profiles');
 
 // Middleware plugins
 app.use(express.json());
@@ -14,8 +12,14 @@ app.use(express.urlencoded({ extended : true }));
 
 
 // Using Routes
+const tests = require('./routes/diagnostics/tests');
+const profiles = require('./routes/diagnostics/profiles');
+const categories = require('./routes/diagnostics/categories');
+
 app.use('/api/diagnostics/tests' , tests);
-app.use('/api/diagnostics/profiles', profiles)
+app.use('/api/diagnostics/profiles', profiles);
+app.use('/api/diagnostics/categories', categories)
+
 
 // Defining Ports
 let port = 3000;
