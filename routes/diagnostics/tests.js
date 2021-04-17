@@ -12,17 +12,27 @@ router.get('/:id?', async function ( request, response )  {
     if( request.query.id ) {
 
         let testId = request.query.id;
-        let test  = await Test.findById({ _id : testId });  
-    
-        if( ! test ) {
-            return response.status(404).send('Resource not found');
+        try {
+            let test  = await Test.findById({ _id : testId });  
+            if( ! test ) {
+                return response.status(404).send('Resource not found');
+            }
+            return response.status(200).send(test);
+
+        } catch( err ) {
+            console.log(err);
+            return response.status(500).send(err);
         }
-        return response.status(200).send(test);
 
     } else {
-        let tests = await Test.find().sort({ name : 1});
-        response.status(200).send(tests);
-        return response.status(200).send(tests);
+        try {
+            let tests = await Test.find().sort({ name : 1});
+            return response.status(200).send(tests);
+        } catch( err ) {
+            console.log(err);
+            return response.status(500).send(err);
+        }
+        
     }    
 });
 
@@ -32,18 +42,28 @@ router.post('/', async function ( request , response ) {
         return response.status(400).send( error.details[0].message )
     }
 
-    const newTest = new Test( request.body );
-    const res = await newTest.save();
-    response.status(200).send(res);
+    let newTest = new Test( request.body );
+    try {
+        await newTest.save();
+        response.status(200).send(res);
+    } catch (err) {
+        console.log(err);
+        response.status(500).send( 'Something went wrong' );
+    }
 }); 
 
 router.delete('/:id?', async function( request, response ) {
     let testId =  request.query.id;
-    let test = await Test.findByIdAndDelete(testId);
-    if( !test) {
-        return response.status(404).send('The Resource with this ID not found');
+    try {
+        let test = await Test.findByIdAndDelete(testId);
+        if( !test) {
+            return response.status(404).send('The Resource with this ID not found');
+        }
+        return response.status(200).send(test);
+    }  catch( err ) {
+        console.log(err);
+        response.status(500).send( 'Something went wrong' );
     }
-    return response.status(200).send(test);
 }); 
 
 
