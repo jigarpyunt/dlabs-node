@@ -45,7 +45,7 @@ router.post('/', async function ( request , response ) {
     let newTest = new Test( request.body );
     try {
         await newTest.save();
-        response.status(200).send(res);
+        response.status(200).send(newTest);
     } catch (err) {
         console.log(err);
         response.status(500).send( 'Something went wrong' );
@@ -69,13 +69,39 @@ router.delete('/:id?', async function( request, response ) {
 
 function validateRequest ( dataBundler ) {
     const schema = Joi.object({
-        name: Joi.string().required().min(5).max(30).label('Name'),
-        unit: Joi.string().required().max(10).label('Unit'),
-        range: Joi.string().required().label('Range'),
-        price: Joi.string().required().label('Price'),
-        codePrefix: Joi.string().required().label('Prefix'),
-        code: Joi.string().required().label('Code'),
-        preTestInformation: Joi.string().required().max(1000).label('Information'),
+        name: Joi.string().required().min(5).max(30).messages({
+            'string.base': 'Test name should be text',
+            'string.empty': 'Test name should not be empty',
+            'strin.min': 'Test name should be minium 5 characters',
+            'strin.max': 'Test name should be maximum 30 characters'
+        }),
+        unit: Joi.string().required().max(10).messages({
+            'string.base': 'Test unit should be text',
+            'string.empty': 'Test unit should not be empty',
+            'strin.min': 'Test unit should be minium 5 characters',
+            'strin.max': 'Test unit should be maximum 30 characters'
+        }),
+        range: Joi.string().required().messages({
+            'string.base': 'Test range should be text',
+            'string.empty': 'Test range should not be empty',
+        }),
+        price: Joi.string().required().messages({
+            'string.base': 'Test price should be text',
+            'string.empty': 'Test price should not be empty',
+        }),
+        codePrefix: Joi.string().required().messages({
+            'string.base': 'Test code prefix should be text',
+            'string.empty': 'Test code prefix should not be empty',
+        }),
+        code: Joi.string().required().messages({
+            'string.base': 'Test code should be text',
+            'string.empty': 'Test code should not be empty',
+        }),
+        preTestInformation: Joi.string().required().max(1000).messages({
+            'string.base': 'Test pre information should be text',
+            'string.empty': 'Test pre information should not be empty',
+            'strin.max': 'Test pre information should be maximum 1000 characters'
+        }),
         speciality: Joi.string().allow(null).allow(''),
         organ:  Joi.string().allow(null).allow(''),
         condition:  Joi.string().allow(null).allow(''),

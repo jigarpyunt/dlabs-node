@@ -33,7 +33,7 @@ router.post('/', async function( request, response) {
     if( error ) {
         return response.status(400).send(error.details[0].message );
     }
-    let newCondition = new Category( data );
+    let newCondition = new Condition( data );
 
     try {
         await newCondition.save();

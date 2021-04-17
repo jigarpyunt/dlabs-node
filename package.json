@@ -20,5 +20,8 @@
     "express": "^4.17.1",
     "joi": "^17.4.0",
     "mongoose": "^5.12.2"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5"
   }
 }

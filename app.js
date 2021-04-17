@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 // Checking MongoDb Connection
 const { ConnectToMongoDb } = require('./db/connectivity');
@@ -9,6 +10,8 @@ ConnectToMongoDb();
 // Middleware plugins
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
+app.use(cors());
+
 
 
 // Using Routes
@@ -17,8 +20,6 @@ const profiles = require('./routes/diagnostics/profiles');
 const categories = require('./routes/diagnostics/categories');
 const conditions = require('./routes/diagnostics/conditions');
 const specialities = require('./routes/diagnostics/specialities');
-
-
 
 app.use('/api/diagnostics/tests' , tests);
 app.use('/api/diagnostics/profiles', profiles);
