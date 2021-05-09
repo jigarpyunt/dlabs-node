@@ -62,8 +62,14 @@ router.delete('/:id?', async function( request, resposne ) {
 
 function validateRequest( dataBundler ) {
     const schema = Joi.object({
-        name: Joi.string().required().min(3).max(20).label("Speciality Name"),
-        description: Joi.string().max(1000).allow(null).allow('').label("Speciality Description"),
+        name: Joi.string().required().min(3).max(20).messages({
+            "string.empty": "Speciality name should not be empty",
+            "string.min": "Speciality name cannot be less than 3 characters",
+            "string.max": "Speciality name cannot be more than 20 characters"
+        }),
+        description: Joi.string().max(1000).allow(null).allow('').messages({
+            "string.max": "Speciality description cannot be more than 1000 characters"
+        }),
     });
 
     return schema.validate( dataBundler );

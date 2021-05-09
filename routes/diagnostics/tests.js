@@ -69,17 +69,17 @@ router.delete('/:id?', async function( request, response ) {
 
 function validateRequest ( dataBundler ) {
     const schema = Joi.object({
-        name: Joi.string().required().min(5).max(30).messages({
+        name: Joi.string().required().min(3).max(30).messages({
             'string.base': 'Test name should be text',
             'string.empty': 'Test name should not be empty',
-            'strin.min': 'Test name should be minium 5 characters',
-            'strin.max': 'Test name should be maximum 30 characters'
+            'string.min': 'Test name should be minium 5 characters',
+            'string.max': 'Test name should be maximum 30 characters'
         }),
         unit: Joi.string().required().max(10).messages({
             'string.base': 'Test unit should be text',
             'string.empty': 'Test unit should not be empty',
-            'strin.min': 'Test unit should be minium 5 characters',
-            'strin.max': 'Test unit should be maximum 30 characters'
+            'string.min': 'Test unit should be minium 5 characters',
+            'string.max': 'Test unit should be maximum 30 characters'
         }),
         range: Joi.string().required().messages({
             'string.base': 'Test range should be text',
@@ -100,13 +100,12 @@ function validateRequest ( dataBundler ) {
         preTestInformation: Joi.string().required().max(1000).messages({
             'string.base': 'Test pre information should be text',
             'string.empty': 'Test pre information should not be empty',
-            'strin.max': 'Test pre information should be maximum 1000 characters'
+            'string.max': 'Test pre information should be maximum 1000 characters'
         }),
-        speciality: Joi.string().allow(null).allow(''),
-        organ:  Joi.string().allow(null).allow(''),
-        condition:  Joi.string().allow(null).allow(''),
-        category:  Joi.string().allow(null).allow(''),
-        reportAvalibilityTime:  Joi.string().allow(null).allow(''),
+        speciality: Joi.object().allow(null).allow(''),
+        methadology:  Joi.object().allow(null).allow(''),
+        category:  Joi.object().allow(null).allow(''),
+        reportAvailibilityTime:  Joi.string().allow(null).allow(''),
         description:  Joi.string().allow(null).allow('')
     });
 

@@ -8,11 +8,10 @@ const testSchema = mongoose.Schema({
     codePrefix: String,
     code: String,
     preTestInformation: String,
-    speciality: String,
-    organ: String,
-    condition: String,
-    category: String,
-    reportAvalibilityTime: String,
+    speciality: Object,
+    methadology: Object,
+    category: Object,
+    reportAvailibilityTime: String,
     description: String
 });
 
