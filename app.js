@@ -20,12 +20,17 @@ const profiles = require('./routes/diagnostics/profiles');
 const categories = require('./routes/diagnostics/categories');
 const methadologies = require('./routes/diagnostics/methadologies');
 const specialities = require('./routes/diagnostics/specialities');
+const labRegistration = require('./routes/registrations/lab');
 
+// Diagnostics Routes
 app.use('/api/diagnostics/tests' , tests);
 app.use('/api/diagnostics/profiles', profiles);
 app.use('/api/diagnostics/categories', categories);
 app.use('/api/diagnostics/methadologies', methadologies);
 app.use('/api/diagnostics/specialities', specialities);
+
+// Registrations Routes
+app.use('/api/registrations/labregistration',labRegistration);
 
 
 
